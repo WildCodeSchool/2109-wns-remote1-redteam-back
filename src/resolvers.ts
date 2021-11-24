@@ -62,10 +62,27 @@ const projects = [
       }
     },
     Mutation: {
-      createComment: (content) => { 
+      createComment: (_, content) => { 
         comments.push(content)
-        console.log(content) 
-    }
+        console.log(content);
+        return comments; 
+      },
+
+      createProject: (_, project) => {
+        console.log(project);
+        projects.push(project);
+        return projects;
+      },
+
+      createUser: (_, user) => {
+        console.log(user);
+        users.push(user);
+        return users;
+      },
+
+      // updateProject: (_, project) => {
+      //   console.log("toto: ", _);
+      // }
     }
   };
  export default resolvers;
