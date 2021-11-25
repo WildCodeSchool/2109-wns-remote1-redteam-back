@@ -1,21 +1,31 @@
 import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
-  type comment {
+  type CommentDefs {
     content : String
   }
 
-  type project {
+  type ProjectDefs {
     name: String, 
     description : String,
     status: String, 
     start_date: String,
     end_date: String,
     advance_pourcentage: Int
-    tasks : [task]
+    tasks : [TaskDefs]
   }
 
-  type task {
+  input ProjectDefsInput {
+    id: String,
+    name: String, 
+    description : String,
+    status: String, 
+    start_date: String,
+    end_date: String,
+    advance_pourcentage: Int
+  }
+
+  type TaskDefs {
     name: String,
     description: String,
     project_id: String,
@@ -23,7 +33,7 @@ const typeDefs = gql`
     user_id: String
   }
 
-  type user {
+  type UserDefs {
     name: String,
     email: String,
     password: String,
@@ -32,19 +42,19 @@ const typeDefs = gql`
   }
 
   type Query {
-    users: [user]
-    comments : [comment]
-    projects: [project]
-    tasks: [task]
+    users: [UserDefs]
+    comments : [CommentDefs]
+    projects: [ProjectDefs]
+    tasks: [TaskDefs]
   }
   type Mutation {
-    createComment(content : String) : [comment] 
+    createComment(content : String) : [CommentDefs] 
 
     createProject(
       name: String,
       description: String,
       status: String
-    ) : [project]
+    ) : [ProjectDefs]
 
     createUser(
       name: String,
@@ -52,9 +62,18 @@ const typeDefs = gql`
       email: String,
       role: String,
       project_id: String
-    ) : [user]
+    ) : [UserDefs]
 
-    updateProject(id: String) : project
+    createTask(
+      name: String,
+      description: String,
+      status: String,
+      user_id: String,
+      project_id: String
+      ) : [TaskDefs]
+
+      
+    updateProject(data: ProjectDefsInput): ProjectDefs
   }
 `;
 

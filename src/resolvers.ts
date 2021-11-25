@@ -18,6 +18,7 @@ const comments = [
 
 const projects = [
   {
+    id: "1",
     name: "projet 1",
     description: "description projet 1",
     status: "Non fini",
@@ -26,6 +27,7 @@ const projects = [
     advance_pourcentage: "90",
     tasks : [
       {
+        id: "1",
         name: "tache1",
         description: "il faut faire ça",
         status: "in progress",
@@ -33,6 +35,7 @@ const projects = [
         project_id: "tutu"
       },
       {
+        id: "2",
         name: "tache3",
         description: "il faut faire ça",
         status: "in progress",
@@ -40,6 +43,7 @@ const projects = [
         project_id: "tutu"
       },
       {
+        id: "3",
         name: "tache4",
         description: "il faut faire ça",
         status: "in progress",
@@ -49,6 +53,39 @@ const projects = [
     ]
   }
 ]
+const tasksList = [
+  {
+    name: "tache1",
+    description: "il faut faire ça",
+    status: "in progress",
+    user_id: "toto",
+    project_id: "tutu"
+  },
+  {
+    name: "tache3",
+    description: "il faut faire ça",
+    status: "in progress",
+    user_id: "toto",
+    project_id: "tutu"
+  },
+  {
+    name: "tache4",
+    description: "il faut faire ça",
+    status: "in progress",
+    user_id: "toto",
+    project_id: "tutu"
+  }
+]
+
+type Project = {
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  start_date: string;
+  end_date: string;
+  advance_pourcentage: string;
+}
 
  const resolvers = {
     Query: {
@@ -80,9 +117,24 @@ const projects = [
         return users;
       },
 
-      // updateProject: (_, project) => {
-      //   console.log("toto: ", _);
-      // }
+      createTask: (_, task) => {
+        console.log(task);
+        tasksList.push(task);
+        return tasksList;
+      },
+
+     
+
+      updateProject: (_,  data : any) => {
+        console.log(data.data.id);
+        let projectToUpdate = projects.filter(project => project.id === data.data.id)
+
+        projectToUpdate = {
+          ...projectToUpdate,
+          ...data.data
+        }
+        return projectToUpdate;
+      }
     }
   };
  export default resolvers;
