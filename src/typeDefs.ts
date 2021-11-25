@@ -2,6 +2,7 @@ import { gql } from 'apollo-server-express';
 
 const typeDefs = gql`
   type CommentDefs {
+    id: String,
     content : String
   }
 
@@ -13,16 +14,6 @@ const typeDefs = gql`
     end_date: String,
     advance_pourcentage: Int
     tasks : [TaskDefs]
-  }
-
-  input ProjectDefsInput {
-    id: String,
-    name: String, 
-    description : String,
-    status: String, 
-    start_date: String,
-    end_date: String,
-    advance_pourcentage: Int
   }
 
   type TaskDefs {
@@ -73,7 +64,45 @@ const typeDefs = gql`
       ) : [TaskDefs]
 
       
-    updateProject(data: ProjectDefsInput): ProjectDefs
+    updateProject( 
+      id: String,
+      name: String, 
+      description : String,
+      status: String, 
+      start_date: String,
+      end_date: String,
+      advance_pourcentage: Int
+      ): ProjectDefs
+
+    updateTask(
+      id: String,
+      name : String,
+      description: String,
+      project_id : String,
+      status : String,
+      user_id : String,
+    ) : TaskDefs
+
+    updateUser(
+      id: String,
+      name: String,
+      password: String,
+      email: String,
+      role: String,
+      project_id : String,
+    ) : UserDefs
+
+    deleteTask(
+      id: String,
+    ) : [TaskDefs]
+
+    deleteComment(
+      id: String,
+    ) : [CommentDefs]
+
+    deleteProject(
+      id: String
+    ) : [ProjectDefs]
   }
 `;
 
