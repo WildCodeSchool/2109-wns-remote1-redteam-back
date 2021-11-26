@@ -3,8 +3,8 @@ import cors from 'cors';
 import mongoose from 'mongoose';
 import { ApolloServer } from 'apollo-server-express';
 import { port, db_port } from './settings';
-import  typeDefs  from './typeDefs';
-import  resolvers  from './resolvers';
+import  typeDefs  from './graphQl/typeDefs';
+import  resolvers  from './graphQl/resolvers';
 
 const app = express();
 app.use(cors());
