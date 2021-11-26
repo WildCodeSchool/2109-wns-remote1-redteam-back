@@ -1,4 +1,6 @@
-export const users = [
+
+
+const users = [
   {
     id: "2",
     name: 'Fab',
@@ -16,14 +18,17 @@ type User = {
   project_id: string,
 }
 
-export const UserMutation = {
-  createUser: (_, user) => {
-    console.log(user);
+export const getAllUser = () => users;
+
+export const createUser = (_, user) => {
+  console.log(user);
     users.push(user);
     return users;
-  },
-  updateUser: (_, data : User) => {
-    console.log(data.id);
+}
+
+
+export const updateUser = (_, data : User) => {
+  console.log(data.id);
     let userToUpdate = users.filter(user => user.id === data.id)
 
     userToUpdate = {
@@ -31,5 +36,4 @@ export const UserMutation = {
       ...data
     }
     return userToUpdate
-  },
 }

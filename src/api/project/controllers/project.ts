@@ -1,4 +1,4 @@
-export const projects = [
+const projects = [
   {
     id: "1",
     name: "projet 1",
@@ -71,10 +71,40 @@ export const projects = [
   }
 ]
 
-export const TaskQueries = {
-  tasks: () => {
-    const tasks = projects.map(project => project.tasks.map(task => task))
-    console.log(tasks)
-    return tasks[0]
+
+type Project = {
+  id: string;
+  name: string;
+  description: string;
+  status: string;
+  start_date: string;
+  end_date: string;
+  advance_pourcentage: string;
+} 
+
+export const getAllProject = () => projects;
+
+
+export const createProject = (_, project) => {
+  console.log(project);
+  projects.push(project);
+  return projects;
+}
+
+export const updateProject = (_,  data : Project) => {
+  console.log(data.id);
+  let projectToUpdate = projects.filter(project => project.id === data.id)
+
+  projectToUpdate = {
+    ...projectToUpdate,
+    ...data
   }
+  return projectToUpdate;
+}
+
+export const deleteProject = (_, data : Project) => {
+  const selectIndexToDelete = projects.findIndex(project => project.id === data.id)
+  projects.splice(selectIndexToDelete, 1)
+
+  return projects;
 }

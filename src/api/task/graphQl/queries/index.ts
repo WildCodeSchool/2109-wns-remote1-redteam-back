@@ -1,4 +1,6 @@
-const projects = [
+import { getAllTasks } from "../../controllers/task"
+
+export const projects = [
   {
     id: "1",
     name: "projet 1",
@@ -71,6 +73,6 @@ const projects = [
   }
 ]
 
-export const ProjectQueries = {
-  projects: () => projects
+export const TaskQueries = {
+  tasks: getAllTasks
 }

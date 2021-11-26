@@ -1,3 +1,5 @@
+import {getAllComments} from "../../controllers/comment"
+
 export const comments = [
   {
     id : "1",
@@ -9,6 +11,6 @@ export const comments = [
 ]
 
 export const CommentQueries = {
-  comments: () => comments,
+  comments: getAllComments,
 }
 
