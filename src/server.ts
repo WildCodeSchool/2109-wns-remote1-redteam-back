@@ -1,10 +1,10 @@
 import express from 'express';
 import cors from 'cors';
-import { port, db_port } from './settings';
 import mongoose from 'mongoose';
-import { ApolloServer, gql } from 'apollo-server-express';
-import { typeDefs } from './typeDefs';
-import { resolvers } from './resolvers'
+import { ApolloServer } from 'apollo-server-express';
+import { port, db_port } from './settings';
+import  typeDefs  from './schema/typeDefs';
+import  resolvers  from './resolvers';
 
 const app = express();
 app.use(cors());

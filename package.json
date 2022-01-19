@@ -4,7 +4,7 @@
   "main": "index.js",
   "license": "MIT",
   "scripts": {
-    "dev": "ts-node-dev src/index",
+    "dev": "ts-node-dev src/server",
     "lint": "eslint --ext .ts,.tsx --fix src/",
     "prettify": "prettier --write src/",
     "fmt-lint": "yarn run prettify && yarn run lint"
@@ -15,7 +15,7 @@
     "cors": "^2.8.5",
     "dotenv": "^10.0.0",
     "express": "^4.17.1",
-    "graphql": "^16.0.1",
+    "graphql": "^15",
     "jest": "^27.3.1",
     "json-web-token": "^3.2.0",
     "mongoose": "^6.0.13"
