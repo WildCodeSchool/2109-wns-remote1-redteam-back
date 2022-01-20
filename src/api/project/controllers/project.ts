@@ -1,110 +1,36 @@
-const projects = [
-  {
-    id: "1",
-    name: "projet 1",
-    description: "description projet 1",
-    status: "Non fini",
-    start_date: "24-11-2021",
-    end_date: "26-11-2021",
-    advance_pourcentage: "90",
-    tasks : [
-      {
-        id: "1",
-        name: "tache1",
-        description: "il faut faire ça",
-        status: "in progress",
-        user_id: "toto",
-        project_id: "tutu"
-      },
-      {
-        id: "2",
-        name: "tache3",
-        description: "il faut faire ça",
-        status: "in progress",
-        user_id: "toto",
-        project_id: "tutu"
-      },
-      {
-        id: "3",
-        name: "tache4",
-        description: "il faut faire ça",
-        status: "in progress",
-        user_id: "toto",
-        project_id: "tutu"
-      }
-    ]
-  },
-  {
-    id: "2",
-    name: "projet 2",
-    description: "description projet 1",
-    status: "Non fini",
-    start_date: "24-11-2021",
-    end_date: "26-11-2021",
-    advance_pourcentage: "90",
-    tasks : [
-      {
-        id: "1",
-        name: "tache1",
-        description: "il faut faire ça",
-        status: "in progress",
-        user_id: "toto",
-        project_id: "tutu"
-      },
-      {
-        id: "2",
-        name: "tache3",
-        description: "il faut faire ça",
-        status: "in progress",
-        user_id: "toto",
-        project_id: "tutu"
-      },
-      {
-        id: "3",
-        name: "tache4",
-        description: "il faut faire ça",
-        status: "in progress",
-        user_id: "toto",
-        project_id: "tutu"
-      }
-    ]
-  }
-]
+import { ObjectId } from 'mongoose';
+import ProjectSchema from '../models/Project'
 
 
 type Project = {
-  id: string;
+  _id: ObjectId;
   name: string;
   description: string;
   status: string;
-  start_date: string;
-  end_date: string;
-  advance_pourcentage: string;
+  start_date: Date;
+  end_date: Date;
+  advance_pourcentage: number;
 } 
 
-export const getAllProject = () => projects;
+export const getAllProject = async () => {
+  return await ProjectSchema.find()
+};
 
-
-export const createProject = (_, project) => {
-  console.log(project);
-  projects.push(project);
-  return projects;
+export const getOneProject = async (_, _id) => {
+  return await ProjectSchema.findOne(_id)
 }
 
-export const updateProject = (_,  data : Project) => {
-  console.log(data.id);
-  let projectToUpdate = projects.filter(project => project.id === data.id)
-
-  projectToUpdate = {
-    ...projectToUpdate,
-    ...data
-  }
-  return projectToUpdate;
+export const createProject = async (_, project) => {
+  await new ProjectSchema(project).save();
+  return project;
 }
 
-export const deleteProject = (_, data : Project) => {
-  const selectIndexToDelete = projects.findIndex(project => project.id === data.id)
-  projects.splice(selectIndexToDelete, 1)
+export const updateProject = async (_,  data : Project) => {
+  return await ProjectSchema.findOneAndUpdate(data._id, data, {new: true});
+}
 
-  return projects;
+export const deleteProject = async (_, _id) => {
+  await ProjectSchema.deleteOne(_id)
+  const projectsToReturn =  await ProjectSchema.find()  
+  return projectsToReturn
 }

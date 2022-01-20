@@ -7,11 +7,13 @@ export const types = `
     end_date: String,
     advance_pourcentage: Int
     tasks : [TaskDefs]
+    _id : ID
   }
 `
 
 export const queries = `
   projects: [ProjectDefs]
+  project(_id : ID): ProjectDefs
 `
 
 export const mutation = `
@@ -19,7 +21,7 @@ export const mutation = `
     name: String,
     description: String,
     status: String
-  ) : [ProjectDefs]
+  ) : ProjectDefs
 
 
   updateProject( 
