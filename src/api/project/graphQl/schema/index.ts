@@ -25,7 +25,7 @@ export const mutation = `
 
 
   updateProject( 
-    id: String,
+    _id: String,
     name: String, 
     description : String,
     status: String, 
@@ -35,6 +35,6 @@ export const mutation = `
     ): ProjectDefs
 
     deleteProject(
-      id: String
+      _id: String
     ) : [ProjectDefs]
 `

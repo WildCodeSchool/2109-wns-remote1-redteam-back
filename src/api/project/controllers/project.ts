@@ -30,7 +30,8 @@ export const updateProject = async (_,  data : Project) => {
 }
 
 export const deleteProject = async (_, _id) => {
-  await ProjectSchema.deleteOne(_id)
+  console.log(_id);
+  await ProjectSchema.findByIdAndRemove(_id);
   const projectsToReturn =  await ProjectSchema.find()  
   return projectsToReturn
 }
