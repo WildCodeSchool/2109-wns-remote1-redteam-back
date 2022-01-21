@@ -19,7 +19,7 @@ type Project = {
 ### Dossier `graphql`:
 Dans le dossier GraphQl, nous avons mis trois sous dossiers `mutations` et `queries` ainsi qu'un dossier `schema`.
 
-Le dossier `schema` regroupe nos Schemas GraphQl. C'est ici que la partie front communiquera avec le backend via des queries et des mutations.
+Le dossier shema regroupe nos Schemas GraphQl. Ces shémas définissent la structure de nos queries et mutations. Il sont ensuite passés au fichier typedefs qui lui même est importé dans server.ts. Typedefs est passé en parametre à l'initialisation d'ApolloServer.
 
 GraphQl à son propre système de typage qui permet de définir le schéma de l'API. La syntaxe pour écrire des schémas s'appelle le SDL (Schema Definition Language).
 Une fois que le schéma est défini, comme l'exemple ci-dessous, la communication entre les devs front et back est simplifiée puisque ils sont au courant de la structure des données envoyées via le réseau.
@@ -128,6 +128,6 @@ export default mongoose.model<Project>('project', ProjectSchema);
 ```
 
 Ici, l'interface correspond au typage imposé par TypeScript.
-Ensuite on importe l'objet `Schema` depuis `mongoose` et nous instancions un nouvel objet `ProjectSchema` depuis la classe `Schema` en spécifiant le type que l'on souhaite avec le typage entre <> défini juste avant.
+Ensuite on importe l'objet `Schema` depuis `mongoose` et nous instancions un nouvel objet `ProjectSchema` depuis la classe `Schema` en spécifiant le type (TypeScript) que l'on souhaite avec le typage entre <> défini juste avant.
 
 Enfin, on exporte le model mongoose avec le type `Project`. Mongoose s'occupera de créer la table en base de données avec le nom automatiquement au pluriel passé en premier argument (`project`) et le schéma de la table en second argument (`ProjectSchema`);
