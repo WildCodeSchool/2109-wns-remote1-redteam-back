@@ -1,4 +1,4 @@
-import {getAllProject} from "../../controllers/project"
+import {getAllProject, getOneProject} from "../../controllers/project"
 
 export const projects = [
   {
@@ -74,5 +74,6 @@ export const projects = [
 ]
 
 export const ProjectQueries = {
-  projects: getAllProject
+  projects: getAllProject,
+  project: getOneProject
 }

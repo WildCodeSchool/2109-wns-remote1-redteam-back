@@ -1,3 +1,6 @@
+import { ObjectId } from 'mongoose';
+import TaskSchema from '../models/Task';
+
 const projects = [
   {
     id: "1",
@@ -99,40 +102,31 @@ const tasksList = [
 ]
 
 type Task = {
-  id: string,
+  id: ObjectId,
   name : string,
   description: string,
-  project_id : string,
+  project_id : ObjectId,
   status : string,
-  user_id : string,
+  user_id : ObjectId,
 }
 
-export const getAllTasks = () => {
-  const tasks = projects.map(project => project.tasks.map(task => task))
-    console.log(tasks)
-    return tasks[0]
+export const getAllTasks = async () => {
+  return await TaskSchema.find();
 };
 
-export const createTask = (_, task) => {
-  console.log(task);
-    tasksList.push(task);
-    return tasksList;
+export const getOneTask = async (_, _id) => {
+  return await TaskSchema.findOne(_id);
+}
+
+export const createTask = async (_, task : Task) => {
+  return await new TaskSchema(task).save();
 }
 
 
 export const updateTask = (_, data : Task) => {
-  console.log(data.id);
-  let taskToUpdate = tasksList.filter(task => task.id === data.id);
-  taskToUpdate = {
-    ...taskToUpdate, 
-    ...data
-  }
-  return taskToUpdate;
+  return "bouuu"
 }
 
 export const deleteTask = (_, data: Task) => {
-  const indexOfTaskToDelete = tasksList.findIndex(task => task.id === data.id);
-  console.log(indexOfTaskToDelete);
-  tasksList.splice(indexOfTaskToDelete, 1);
-  return tasksList;
+  return "bouuu"
 }

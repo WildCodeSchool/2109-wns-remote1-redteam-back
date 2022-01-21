@@ -1,4 +1,4 @@
-import { getAllTasks } from "../../controllers/task"
+import { getAllTasks, getOneTask } from "../../controllers/task"
 
 export const projects = [
   {
@@ -74,5 +74,6 @@ export const projects = [
 ]
 
 export const TaskQueries = {
-  tasks: getAllTasks
+  tasks: getAllTasks,
+  task: getOneTask
 }

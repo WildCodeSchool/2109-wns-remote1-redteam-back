@@ -2,14 +2,15 @@ export const types = `
   type TaskDefs {
     name: String,
     description: String,
-    project_id: String,
+    project_id: ID,
     status: String,
-    user_id: String
+    user_id: ID
   }
 `
 
 export const queries = `
   tasks: [TaskDefs]
+  task(_id: ID): TaskDefs
 `
 
 export const mutation = `
@@ -17,9 +18,9 @@ export const mutation = `
     name: String,
     description: String,
     status: String,
-    user_id: String,
-    project_id: String
-  ) : [TaskDefs]
+    user_id: ID,
+    project_id: ID
+  ) : TaskDefs
 
   updateTask(
     id: String,

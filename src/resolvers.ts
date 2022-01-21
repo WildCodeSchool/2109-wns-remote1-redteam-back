@@ -14,7 +14,6 @@ import ProjectMutation from "./api/project/graphQl/mutations/index"
       ...TaskQueries,
       ...CommentQueries,
       ...ProjectQueries,
-      
     },
 
     Mutation: {
