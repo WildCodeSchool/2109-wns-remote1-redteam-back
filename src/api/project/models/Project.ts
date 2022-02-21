@@ -5,8 +5,8 @@ interface Project {
   description: string;
   status : string;
   user_id : ObjectId;
-  start_date : Date;
-  end_date : Date;
+  start_date : string;
+  end_date : string;
   advance_pourcentage : number;
 };
 
@@ -16,8 +16,8 @@ const ProjectSchema = new Schema<Project>({
   description : {type : String},
   status : {type : String},
   user_id : {type : Schema.Types.ObjectId},
-  start_date : {type : Date},
-  end_date : {type : Date},
+  start_date : {type : String},
+  end_date : {type : String},
   advance_pourcentage : {type : Number}
 });
 export default mongoose.model<Project>('project', ProjectSchema);

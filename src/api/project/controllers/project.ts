@@ -7,27 +7,27 @@ type Project = {
   name: string;
   description: string;
   status: string;
-  start_date: Date;
-  end_date: Date;
+  start_date: string;
+  end_date: string;
   advance_pourcentage: number;
 } 
 
-export const getAllProject = async () => {
-  return await ProjectSchema.find()
+export const getAllProject = async () =>  { 
+  const projects =  await ProjectSchema.find();
+  console.log(projects);
+  return projects;
 };
 
-export const getOneProject = async (_, _id) => {
-  return await ProjectSchema.findOne(_id)
-}
+export const getOneProject = async (_, _id) => 
+   ProjectSchema.findOne(_id)
+
 
 export const createProject = async (_, project) => {
-  await new ProjectSchema(project).save();
-  return project;
+  const savedProject = await  new ProjectSchema({ ...project,  advance_pourcentage : 0 }).save();
+  return savedProject;
 }
 
-export const updateProject = async (_,  data : Project) => {
-  return await ProjectSchema.findOneAndUpdate(data._id, data, {new: true});
-}
+export const updateProject = async (_,  data : Project) =>  ProjectSchema.findOneAndUpdate(data._id, data, {new: true});
 
 export const deleteProject = async (_, _id) => {
   console.log(_id);

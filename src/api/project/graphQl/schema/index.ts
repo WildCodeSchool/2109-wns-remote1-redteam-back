@@ -20,7 +20,9 @@ export const mutation = `
   createProject(
     name: String,
     description: String,
-    status: String
+    status: String,
+    start_date: String,
+    end_date: String,
   ) : ProjectDefs
 
 
