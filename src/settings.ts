@@ -4,4 +4,4 @@ dotenv.config();
 
 export const port = process.env.PORT || 5000;
 
-export const db_port = process.env.DB_PORT || 'MON URL DE DB';
+export const DB_PORT_URL = process.env.DB_PORT || 'MON URL DE DB';
