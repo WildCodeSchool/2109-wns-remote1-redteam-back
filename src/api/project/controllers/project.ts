@@ -14,7 +14,6 @@ type Project = {
 
 export const getAllProject = async () =>  { 
   const projects =  await ProjectSchema.find();
-  console.log(projects);
   return projects;
 };
 
@@ -27,7 +26,10 @@ export const createProject = async (_, project) => {
   return savedProject;
 }
 
-export const updateProject = async (_,  data : Project) =>  ProjectSchema.findOneAndUpdate(data._id, data, {new: true});
+export const updateProject = async (_,  data : Project) => {
+  console.log("UPDATE PROJECT: ", data)
+  return await ProjectSchema.findOneAndUpdate({_id: data._id}, data, {new: true});
+} 
 
 export const deleteProject = async (_, _id) => {
   console.log(_id);
