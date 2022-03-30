@@ -1,4 +1,4 @@
-
+import UserSchema from '../models/User'
 
 const users = [
   {
@@ -18,7 +18,10 @@ type User = {
   project_id: string,
 }
 
-export const getAllUser = () => users;
+export const getAllUser = async () => {
+  const users = await UserSchema.find();
+  return users;
+};
 
 export const createUser = (_, user) => {
   console.log(user);
