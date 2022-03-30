@@ -18,60 +18,44 @@ mongoose.connect(DB_PORT_URL)
   .then(() => console.log('Connect to Database ✅'))
   .catch((err) => console.log('Oops, connection failed', err))
 
-
-app.get('/api/dummy-endpoint', (req, res) =>
-  res.send({
-    message: 'Hello from the backend',
-  })
-);
-
-// 1 - Récupérer les infos de l'utilisateur
-// 2 - Vérifier si l'utilisateur existe en base de donnée
-// 3 - Si l'utilisateur n'existe pas on send une erreur
-// 4 - Si il existe comparer les mdp
-// 5 - Retourner le JWT lorsque le user existe et que le mot de passe est le bon
-
 app.post('/login', async (req, res) => {
-  const {username, password} = req.body;
-  console.log(username, password);
-  const user = await User.findOne({ username });
-  if(!user) return res.send({ message: "invalid credentials"})
-
-  const result = await bcrypt.compare(password, user.password);
-  if(!result) return res.send({ message: "invalid credentials"})
-
-  const payload = {
-    id: user._id,
-    username: username,
-  }
   
-  const token = jwt.sign(payload, JWT_SECRET, {expiresIn : "24h"});
-  return res.send({
-    token: token,
-    message: "Connected",
-  })
+  try {
+    const user = await User.findOne({ name :req.body.name });
+    if(!user) return res.send({ message: "invalid credentials"}).status(400)
+
+    const result = await bcrypt.compare(req.body.password, user.password);
+    if(!result) return res.send({ message: "invalid credentials"}).status(400)
+    const payload = {
+      id: user._id,
+      name: req.body.name,
+    }
+    const token = jwt.sign(payload, JWT_SECRET, {expiresIn : "24h"});
+    return res.send({
+      token: token,
+      message: "Connected",
+    })
+  }catch (e) {
+      return res.send({
+        message: "Une erreur est survenue",
+        error: e
+      }).status(500);
+  }
 }); 
 
-
-// 1 - Récupérer les infos de l'utilisateur
-// 2 - Vérifier si l'utilisateur existe en base de donnée
-// 3 - Si l'utilisateur existe on send une erreur
-// 4 - Si l'utilisateur n'existe pas on send l'objet avec l'utilisateur (creation)
 app.post('/signup', async (req, res) => {
-  const user = req.body;
-  const userVerif = await User.findOne({email: user.email});
-  console.log(userVerif);
-  if(userVerif) return res.send({message: "user already exist"}).status(400)
-  const password = await bcrypt.hash(user.password, 8);
-   // Constituer ton User
-  const userDb = new User({...user, password });
-
-   // Sauvergarder ton User 
-   await userDb.save()
-  return res.send({message: "user create"}).status(200);
-  
-  
-
+  try {
+    const user = await User.findOne({email: req.body.email});
+    if(user) return res.send({message: "user already exist"}).status(400)
+    const password = await bcrypt.hash(req.body.password, 8);
+    await new User({...req.body, password }).save();
+    return res.send({message: "user create"}).status(200);
+  }catch (e) {
+      return res.send({
+          message: "Une erreur est survenue",
+          error: e
+        }).status(500);
+  }
 })
 
 // Provide resolver functions for your schema fields
