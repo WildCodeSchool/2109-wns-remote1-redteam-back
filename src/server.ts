@@ -8,6 +8,7 @@ import { port, DB_PORT_URL, JWT_SECRET } from './settings';
 import  typeDefs  from './schema/typeDefs';
 import  resolvers  from './resolvers';
 import User from './api/user/models/User';
+import checkAuth from './api/middleware/auth';
 
 const app = express();
 app.use(cors());
@@ -18,6 +19,9 @@ mongoose.connect(DB_PORT_URL)
   .then(() => console.log('Connect to Database ✅'))
   .catch((err) => console.log('Oops, connection failed', err))
 
+  app.get('/toto', checkAuth, (req, res)=>{
+    res.send("ok");
+  })
 app.post('/login', async (req, res) => {
   
   try {
@@ -32,7 +36,7 @@ app.post('/login', async (req, res) => {
     }
     const token = jwt.sign(payload, JWT_SECRET, {expiresIn : "24h"});
     return res.send({
-      token: token,
+      token,
       message: "Connected",
     })
   }catch (e) {
@@ -62,7 +66,8 @@ app.post('/signup', async (req, res) => {
 
 const server = new ApolloServer({
   typeDefs,
-  resolvers
+  resolvers,
+  context: checkAuth
 });
 
 const startServer = async () => {
