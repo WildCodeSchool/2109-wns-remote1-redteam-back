@@ -12,7 +12,8 @@ type Project = {
   advance_pourcentage: number;
 } 
 
-export const getAllProject = async () =>  { 
+export const getAllProject = async (_, __, ctx) =>  { 
+  console.log('CONTEXT: ', ctx);
   const projects =  await ProjectSchema.find();
   console.log(projects);
   return projects;
