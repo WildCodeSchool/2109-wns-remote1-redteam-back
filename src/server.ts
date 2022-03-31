@@ -9,6 +9,7 @@ import  typeDefs  from './schema/typeDefs';
 import  resolvers  from './resolvers';
 import User from './api/user/models/User';
 import checkAuth from './api/middleware/auth';
+import checkRole from './api/middleware/role';
 
 const app = express();
 app.use(cors());
@@ -19,11 +20,11 @@ mongoose.connect(DB_PORT_URL)
   .then(() => console.log('Connect to Database ✅'))
   .catch((err) => console.log('Oops, connection failed', err))
 
-  app.get('/toto', checkAuth, (req, res)=>{
-    res.send("ok");
-  })
+app.get('/toto', checkAuth, checkRole('admin'), (req, res)=>{
+  res.send("ok");
+})
+
 app.post('/login', async (req, res) => {
-  
   try {
     const user = await User.findOne({ name :req.body.name });
     if(!user) return res.send({ message: "invalid credentials"}).status(400)
@@ -33,6 +34,7 @@ app.post('/login', async (req, res) => {
     const payload = {
       id: user._id,
       name: req.body.name,
+      role: user.role
     }
     const token = jwt.sign(payload, JWT_SECRET, {expiresIn : "24h"});
     return res.send({
@@ -47,12 +49,12 @@ app.post('/login', async (req, res) => {
   }
 }); 
 
-app.post('/signup', async (req, res) => {
+app.post('/signup' ,async (req, res) => {
   try {
     const user = await User.findOne({email: req.body.email});
     if(user) return res.send({message: "user already exist"}).status(400)
     const password = await bcrypt.hash(req.body.password, 8);
-    await new User({...req.body, password }).save();
+    await new User({...req.body, password, role: 'admin' }).save();
     return res.send({message: "user create"}).status(200);
   }catch (e) {
       return res.send({
