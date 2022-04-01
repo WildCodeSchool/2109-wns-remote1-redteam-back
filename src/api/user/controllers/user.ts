@@ -23,6 +23,13 @@ export const getAllUser = async () => {
   return users;
 };
 
+export const getConnectedUser = async(_, __, ctx) => {
+  const { isAuth, userId, role } = ctx;
+  const user = UserSchema.findById(userId);
+
+  return user;
+}
+
 export const createUser = (_, user) => {
   console.log(user);
     users.push(user);

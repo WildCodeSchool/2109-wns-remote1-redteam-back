@@ -2,7 +2,6 @@ export const types = `
   type UserDefs {
     name: String,
     email: String,
-    password: String,
     role: String,
     project_id : String
   }
@@ -10,6 +9,7 @@ export const types = `
 
 export const queries = `
   users: [UserDefs]
+  getConnectedUser: UserDefs
 `
 
 export const mutation = `

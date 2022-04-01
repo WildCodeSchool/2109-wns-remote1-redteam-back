@@ -24,7 +24,7 @@ mongoose.connect(DB_PORT_URL)
   .then(() => console.log('Connect to Database ✅'))
   .catch((err) => console.log('Oops, connection failed', err))
 
-app.get('/toto', checkAuth, checkRole('admin', 'dev'), (req, res)=>{
+app.get('/test', checkAuth, checkRole('admin', 'dev'), (req, res)=>{
   res.send("ok");
 })
 
